@@ -20,6 +20,11 @@ func (l *ListNode) String() string {
 	return b.String()
 }
 
+// 移除链表元素
+func Remove(head *ListNode, val int) *ListNode {
+	panic("TODO")
+}
+
 // 合并两个有序链表
 func Merge(list1 *ListNode, list2 *ListNode) *ListNode {
 	panic("TODO")
@@ -30,7 +35,17 @@ func Reverse(head *ListNode) *ListNode {
 	panic("TODO")
 }
 
+// 删除重复元素
+func Duplicate(head *ListNode) *ListNode {
+	panic("TODO")
+}
+
 // 判断是否属于回文链表
 func IsPalindrome(head *ListNode) bool {
+	panic("TODO")
+}
+
+// 判断是否存在回环
+func HasCycle(head *ListNode) bool {
 	panic("TODO")
 }
