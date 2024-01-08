@@ -63,9 +63,18 @@ func Reverse(head *ListNode) *ListNode {
 	panic("TODO")
 }
 
-// 删除重复元素
+// 有序链表-删除重复元素
 func Duplicate(head *ListNode) *ListNode {
-	panic("TODO")
+	node := &ListNode{Next: head}
+	curNode := node
+	for curNode.Next != nil && curNode.Next.Next != nil {
+		if curNode.Next.Val == curNode.Next.Next.Val {
+			curNode = curNode.Next.Next
+		} else {
+			curNode = curNode.Next
+		}
+	}
+	return node.Next
 }
 
 // 判断是否属于回文链表
