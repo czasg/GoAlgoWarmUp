@@ -79,7 +79,25 @@ func Duplicate(head *ListNode) *ListNode {
 
 // 判断是否属于回文链表
 func IsPalindrome(head *ListNode) bool {
-	panic("TODO")
+	arr := NodeToArray(head)
+	n := len(arr)
+	for i := 0; i < n/2; i++ {
+		if arr[i] != arr[n-i-1] {
+			return false
+		}
+	}
+	return true
+}
+
+func NodeToArray(head *ListNode) (arr []int) {
+	if head == nil {
+		return
+	}
+	for head != nil {
+		arr = append(arr, head.Val)
+		head = head.Next
+	}
+	return
 }
 
 // 判断是否存在回环
