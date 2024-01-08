@@ -90,7 +90,12 @@ func IsSame(p *TreeNode, q *TreeNode) bool {
 
 // 翻转二叉树
 func Mirror(root *TreeNode) *TreeNode {
-	panic("TODO")
+	if root == nil {
+		return nil
+	}
+	root.Left = Mirror(root.Right)
+	root.Right = Mirror(root.Left)
+	return root
 }
 
 // 将数组转化为二叉搜索树
