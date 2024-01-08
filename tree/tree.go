@@ -49,15 +49,33 @@ func MaxDepth(root *TreeNode) int {
 	if root == nil {
 		return 0
 	}
-	return 1 + math.Max(
-		MaxDepth(root.Left),
-		MaxDepth(root.Right),
-	)
+	if root.Left == nil && root.Right == nil {
+		return 1
+	}
+	if root.Left == nil {
+		return 1 + MaxDepth(root.Right)
+	}
+	if root.Right == nil {
+		return 1 + MaxDepth(root.Left)
+	}
+	return 1 + math.Max(MaxDepth(root.Left), MaxDepth(root.Right))
 }
 
 // 获取树的最小深度
 func MinDepth(root *TreeNode) int {
-	panic("TODO")
+	if root == nil {
+		return 0
+	}
+	if root.Left == nil && root.Right == nil {
+		return 1
+	}
+	if root.Left == nil {
+		return 1 + MinDepth(root.Right)
+	}
+	if root.Right == nil {
+		return 1 + MinDepth(root.Left)
+	}
+	return 1 + math.Min(MinDepth(root.Left), MinDepth(root.Right))
 }
 
 // 判断是否属于对称二叉树
@@ -78,16 +96,6 @@ func isSymmetric(left, right *TreeNode) bool {
 	return (left.Val == right.Val) && isSymmetric(left.Left, right.Right) && isSymmetric(left.Right, right.Left)
 }
 
-// 判断是否属于平衡二叉树
-func IsBalanced(root *TreeNode) bool {
-	if root == nil {
-		return true
-	}
-	leftHeight := MaxDepth(root.Left)
-	rightHeight := MaxDepth(root.Right)
-	return math.Abs(leftHeight-rightHeight) <= 1 && IsBalanced(root.Left) && IsBalanced(root.Right)
-}
-
 // 判断两个树是否相同
 func IsSame(p *TreeNode, q *TreeNode) bool {
 	if p == nil && q == nil {
@@ -97,6 +105,16 @@ func IsSame(p *TreeNode, q *TreeNode) bool {
 		return false
 	}
 	return p.Val == q.Val && IsSame(p.Left, q.Left) && IsSame(q.Right, q.Right)
+}
+
+// 判断是否属于平衡二叉树
+func IsBalanced(root *TreeNode) bool {
+	if root == nil {
+		return true
+	}
+	leftHeight := MaxDepth(root.Left)
+	rightHeight := MaxDepth(root.Right)
+	return math.Abs(leftHeight-rightHeight) <= 1 && IsBalanced(root.Left) && IsBalanced(root.Right)
 }
 
 // 翻转二叉树
@@ -110,8 +128,16 @@ func Mirror(root *TreeNode) *TreeNode {
 }
 
 // 将数组转化为二叉搜索树
-func NewTreeWithArray(arr []int) *TreeNode {
-	panic("TODO")
+func SortedArrayToBST(arr []int) *TreeNode {
+	if len(arr) < 1 {
+		return nil
+	}
+	mid := len(arr) / 2
+	return &TreeNode{
+		Val:   mid,
+		Left:  SortedArrayToBST(arr[:mid]),
+		Right: SortedArrayToBST(arr[mid+1:]),
+	}
 }
 
 // 搜索二叉树
@@ -131,12 +157,50 @@ func Search(root *TreeNode, val int) *TreeNode {
 
 // 插入值
 func Insert(root *TreeNode, val int) *TreeNode {
-	panic("TODO")
+	if root == nil {
+		return &TreeNode{Val: val}
+	}
+	if val < root.Val {
+		root.Left = Insert(root.Left, val)
+	} else if val > root.Val {
+		root.Right = Insert(root.Right, val)
+	}
+	return root
 }
 
 // 删除值
 func Delete(root *TreeNode, val int) *TreeNode {
-	panic("TODO")
+	if root == nil {
+		return nil
+	}
+	if val < root.Val {
+		root.Left = Delete(root.Left, val)
+	} else if val > root.Val {
+		root.Right = Delete(root.Right, val)
+	} else {
+		if root.Left == nil && root.Right == nil {
+			return nil
+		}
+		if root.Left == nil {
+			return root.Right
+		} else if root.Right == nil {
+			return root.Left
+		}
+		rightMinVal := MinValueBST(root.Right).Val
+		root.Val = rightMinVal
+		root.Right = Delete(root.Right, rightMinVal)
+	}
+	return root
+}
+
+func MinValueBST(root *TreeNode) *TreeNode {
+	if root == nil {
+		return nil
+	}
+	for root.Left != nil {
+		root = root.Left
+	}
+	return root
 }
 
 // 计算左叶子树之和
@@ -144,11 +208,9 @@ func SumLeftTree(root *TreeNode) (sum int) {
 	if root == nil {
 		return
 	}
-	// 判断当前节点的左叶子是否属于叶子节点
 	if root.Left != nil && root.Left.Left == nil && root.Left.Right == nil {
 		sum += root.Left.Val
 	}
-	// 递归处理
 	sum += SumLeftTree(root.Left)
 	sum += SumLeftTree(root.Right)
 	return
