@@ -22,7 +22,18 @@ func (l *ListNode) String() string {
 
 // 移除链表元素
 func Remove(head *ListNode, val int) *ListNode {
-	panic("TODO")
+	node := &ListNode{
+		Val:  0,
+		Next: head,
+	}
+	for node.Next != nil {
+		if node.Next.Val == val {
+			node = node.Next.Next
+		} else {
+			node = node.Next
+		}
+	}
+	return node.Next
 }
 
 // 合并两个有序链表
