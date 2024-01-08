@@ -38,7 +38,24 @@ func Remove(head *ListNode, val int) *ListNode {
 
 // 合并两个有序链表
 func Merge(list1 *ListNode, list2 *ListNode) *ListNode {
-	panic("TODO")
+	node := &ListNode{}
+	curNode := node
+	for list1 != nil && list2 != nil {
+		if list1.Val < list2.Val {
+			curNode.Next = list1
+			list1 = list1.Next
+		} else {
+			curNode.Next = list2
+			list2 = list2.Next
+		}
+		curNode = curNode.Next
+	}
+	if list1 != nil {
+		curNode.Next = list1
+	} else if list2 != nil {
+		curNode.Next = list2
+	}
+	return node.Next
 }
 
 // 翻转链表
