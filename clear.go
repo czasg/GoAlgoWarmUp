@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -10,14 +9,14 @@ import (
 )
 
 func panicTodo(file string) error {
-	content, err := ioutil.ReadFile(file)
+	content, err := os.ReadFile(file)
 	if err != nil {
 		return err
 	}
 
 	// 使用正则表达式匹配以 func 开始的函数，替换函数体为 panic("TODO")
 	re := regexp.MustCompile(`(\n//[\s\S]*?func.*?{)[\s\S]*?\n}`)
-	newContent := re.ReplaceAllString(string(content), "$1\n\t panic(\"TODO???\")\n}")
+	newContent := re.ReplaceAllString(string(content), "$1\n\tpanic(\"TODO\")\n}")
 	fmt.Println(newContent)
 	// 写入替换后的内容到文件
 	err = os.WriteFile(file, []byte(newContent), os.ModePerm)
@@ -34,10 +33,10 @@ func processGoFiles(root string) error {
 		if err != nil {
 			return err
 		}
-		if !info.IsDir() && strings.HasSuffix(info.Name(), ".go") && !strings.HasSuffix(info.Name(), "_test.go") {
-			if info.Name() == "clear.go" {
-				return nil
-			}
+		if !info.IsDir() &&
+			strings.HasSuffix(info.Name(), ".go") &&
+			!strings.HasSuffix(info.Name(), "_test.go") &&
+			filepath.Dir(path) != root {
 			fmt.Printf("Processing: %s\n", path)
 			err := panicTodo(path)
 			if err != nil {
@@ -56,6 +55,7 @@ func main() {
 		fmt.Printf("Error getting current directory: %v\n", err)
 		return
 	}
+	fmt.Printf("Current Dir is: %s\n", currentDir)
 
 	err = processGoFiles(currentDir)
 	if err != nil {
