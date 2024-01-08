@@ -102,5 +102,17 @@ func NodeToArray(head *ListNode) (arr []int) {
 
 // 判断是否存在回环
 func HasCycle(head *ListNode) bool {
-	panic("TODO")
+	if head == nil || head.Next == nil {
+		return false
+	}
+	oneStep := head
+	twoStep := head.Next
+	for oneStep != nil && twoStep != nil && twoStep.Next != nil { // 双指针法
+		if oneStep == twoStep {
+			return true
+		}
+		oneStep = oneStep.Next
+		twoStep = twoStep.Next.Next
+	}
+	return false
 }
