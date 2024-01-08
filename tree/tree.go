@@ -122,3 +122,18 @@ func Insert(root *TreeNode, val int) *TreeNode {
 func Delete(root *TreeNode, val int) *TreeNode {
 	panic("TODO")
 }
+
+// 计算左叶子树之和
+func SumLeftTree(root *TreeNode) (sum int) {
+	if root == nil {
+		return
+	}
+	// 判断当前节点的左叶子是否属于叶子节点
+	if root.Left != nil && root.Left.Left == nil && root.Left.Right == nil {
+		sum += root.Left.Val
+	}
+	// 递归处理
+	sum += SumLeftTree(root.Left)
+	sum += SumLeftTree(root.Right)
+	return
+}
