@@ -80,7 +80,12 @@ func isSymmetric(left, right *TreeNode) bool {
 
 // 判断是否属于平衡二叉树
 func IsBalanced(root *TreeNode) bool {
-	panic("TODO")
+	if root == nil {
+		return true
+	}
+	leftHeight := MaxDepth(root.Left)
+	rightHeight := MaxDepth(root.Right)
+	return math.Abs(leftHeight-rightHeight) <= 1 && IsBalanced(root.Left) && IsBalanced(root.Right)
 }
 
 // 判断两个树是否相同
