@@ -17,7 +17,6 @@ func panicTodo(file string) error {
 	// 使用正则表达式匹配以 func 开始的函数，替换函数体为 panic("TODO")
 	re := regexp.MustCompile(`(\n//[\s\S]*?func.*?{)[\s\S]*?\n}`)
 	newContent := re.ReplaceAllString(string(content), "$1\n\tpanic(\"TODO\")\n}")
-	fmt.Println(newContent)
 	// 写入替换后的内容到文件
 	err = os.WriteFile(file, []byte(newContent), os.ModePerm)
 	if err != nil {
