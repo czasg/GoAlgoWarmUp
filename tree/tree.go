@@ -1,5 +1,7 @@
 package tree
 
+import "proj/math"
+
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
@@ -44,7 +46,13 @@ func PostorderTraversal(root *TreeNode) []int {
 
 // 获取树的最大深度
 func MaxDepth(root *TreeNode) int {
-	panic("TODO")
+	if root == nil {
+		return 0
+	}
+	return 1 + math.Max(
+		MaxDepth(root.Left),
+		MaxDepth(root.Right),
+	)
 }
 
 // 获取树的最小深度
