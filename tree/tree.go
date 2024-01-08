@@ -90,7 +90,13 @@ func IsBalanced(root *TreeNode) bool {
 
 // 判断两个树是否相同
 func IsSame(p *TreeNode, q *TreeNode) bool {
-	panic("TODO")
+	if p == nil && q == nil {
+		return true
+	}
+	if p == nil || q == nil {
+		return false
+	}
+	return p.Val == q.Val && IsSame(p.Left, q.Left) && IsSame(q.Right, q.Right)
 }
 
 // 翻转二叉树
