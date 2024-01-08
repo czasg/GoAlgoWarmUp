@@ -60,7 +60,14 @@ func Merge(list1 *ListNode, list2 *ListNode) *ListNode {
 
 // 翻转链表
 func Reverse(head *ListNode) *ListNode {
-	panic("TODO")
+	var prevNode *ListNode
+	for head != nil {
+		nextNode := head.Next
+		head.Next = prevNode
+		prevNode = head
+		head = nextNode
+	}
+	return prevNode
 }
 
 // 有序链表-删除重复元素
