@@ -27,3 +27,25 @@ func expandAroundCenter(s string, left, right int) int {
 	}
 	return right - left - 1
 }
+
+// 无重复字符的最长子串-滑动窗口
+func lengthOfLongestSubstring(s string) int {
+	charIndexMap := make(map[rune]int)
+	start := 0
+	maxLength := 0
+	for end, char := range s {
+		// 如果字符已经在窗口中，更新窗口的起始位置
+		if lastIndex, found := charIndexMap[char]; found && lastIndex >= start {
+			start = lastIndex + 1
+		}
+		// 更新字符在窗口中的位置
+		charIndexMap[char] = end
+		// 计算当前子串的长度
+		currentLength := end - start + 1
+		// 更新最大长度
+		if currentLength > maxLength {
+			maxLength = currentLength
+		}
+	}
+	return maxLength
+}
