@@ -64,44 +64,15 @@ func carFleet(target int, position []int, speed []int) int {
 	return fleet
 }
 
-func carBubbleSort(cars []Car) []Car {
-	n := len(cars)
-	for i := 0; i < n; i++ {
-		for j := 0; j < n-i-1; j++ {
-			if cars[j].Position < cars[j+1].Position {
-				cars[j], cars[j+1] = cars[j+1], cars[j]
-			}
-		}
+// 爬楼梯
+func climbStairs(n int) int {
+	if n <= 1 {
+		return 1
 	}
-	return cars
-}
-
-func carMergeSort(cars []Car) []Car {
-	if len(cars) <= 1 {
-		return cars
+	arr := make([]int, n+1)
+	arr[0], arr[1] = 1, 1
+	for i := 2; i <= n; i++ {
+		arr[i] = arr[i-1] + arr[i-2]
 	}
-	n := len(cars)
-	leftCars := carMergeSort(cars[:n])
-	rightCars := carMergeSort(cars[n:])
-	return carMergeSort2(leftCars, rightCars)
-}
-
-func carMergeSort2(leftCars, rightCars []Car) []Car {
-	cars := []Car{}
-	i, j := 0, 0
-	if i < len(leftCars) && j < len(rightCars) {
-		if leftCars[i].Position > rightCars[j].Position {
-			cars = append(cars, leftCars[i])
-			i++
-		} else {
-			cars = append(cars, rightCars[j])
-			j++
-		}
-	}
-	if i < len(leftCars) {
-		cars = append(cars, leftCars[i:]...)
-	} else if j < len(rightCars) {
-		cars = append(cars, rightCars[j:]...)
-	}
-	return cars
+	return arr[n]
 }
