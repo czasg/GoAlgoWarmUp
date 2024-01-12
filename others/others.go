@@ -1,5 +1,7 @@
 package others
 
+import "sort"
+
 // 回旋镖
 func numberOfBoomerangs(points [][]int) int {
 	ans := 0
@@ -37,6 +39,9 @@ func carFleet(target int, position []int, speed []int) int {
 	if len(position) < 1 {
 		return 0
 	}
+	if len(position) == 1 {
+		return 1
+	}
 	cars := []Car{}
 	for i := 0; i < len(position); i++ {
 		cars = append(cars, Car{
@@ -45,13 +50,15 @@ func carFleet(target int, position []int, speed []int) int {
 			Time:     float64((target - position[i])) / float64(speed[i]),
 		})
 	}
-	cars = carBubbleSort(cars)
+	sort.Slice(cars, func(i, j int) bool {
+		return cars[i].Position > cars[j].Position
+	})
 	fleet := 1
-	preTime := cars[0].Time
+	headCar := cars[0]
 	for i := 1; i < len(cars); i++ {
-		if cars[i].Time > preTime {
+		if cars[i].Time > headCar.Time {
 			fleet++
-			preTime = cars[i].Time
+			headCar = cars[i]
 		}
 	}
 	return fleet
@@ -65,6 +72,36 @@ func carBubbleSort(cars []Car) []Car {
 				cars[j], cars[j+1] = cars[j+1], cars[j]
 			}
 		}
+	}
+	return cars
+}
+
+func carMergeSort(cars []Car) []Car {
+	if len(cars) <= 1 {
+		return cars
+	}
+	n := len(cars)
+	leftCars := carMergeSort(cars[:n])
+	rightCars := carMergeSort(cars[n:])
+	return carMergeSort2(leftCars, rightCars)
+}
+
+func carMergeSort2(leftCars, rightCars []Car) []Car {
+	cars := []Car{}
+	i, j := 0, 0
+	if i < len(leftCars) && j < len(rightCars) {
+		if leftCars[i].Position > rightCars[j].Position {
+			cars = append(cars, leftCars[i])
+			i++
+		} else {
+			cars = append(cars, rightCars[j])
+			j++
+		}
+	}
+	if i < len(leftCars) {
+		cars = append(cars, leftCars[i:]...)
+	} else if j < len(rightCars) {
+		cars = append(cars, rightCars[j:]...)
 	}
 	return cars
 }
