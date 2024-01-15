@@ -123,3 +123,22 @@ func HasCycle(head *ListNode) bool {
 	}
 	return false
 }
+
+// 相交链表
+func getIntersectionNode(headA, headB *ListNode) *ListNode {
+	pA := headA
+	pB := headB
+	if headA != headB {
+		if headA == nil {
+			headA = pB
+		} else {
+			headA = headA.Next
+		}
+		if headB == nil {
+			headB = pA
+		} else {
+			headB = headB.Next
+		}
+	}
+	return pA
+}

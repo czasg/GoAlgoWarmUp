@@ -1,6 +1,10 @@
 package strs
 
-import "proj/math"
+import (
+	"math/rand"
+	"proj/math"
+	"time"
+)
 
 // 最长回文子串-中心扩展法
 func longestPalindrome(s string) string {
@@ -48,4 +52,20 @@ func lengthOfLongestSubstring(s string) int {
 		}
 	}
 	return maxLength
+}
+
+// 生成随机字符串
+func genRandomStr(length int, need_special_char bool) string {
+	baseChars := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	specialChars := "!@#$%^&*~"
+	if need_special_char {
+		baseChars += specialChars
+	}
+	rand.Seed(time.Now().UnixNano())
+	result := make([]byte, length)
+	for i := range result {
+		result[i] = baseChars[rand.Intn(len(baseChars))]
+	}
+
+	return string(result)
 }

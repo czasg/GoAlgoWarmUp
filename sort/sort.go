@@ -1,5 +1,7 @@
 package sort
 
+import "sort"
+
 // 冒泡排序
 func BubbleSort(arr []int) []int {
 	n := len(arr)
@@ -111,5 +113,29 @@ func MergeSort(arr []int) []int {
 	ans = append(ans, MergeSort(left)...)
 	ans = append(ans, base)
 	ans = append(ans, MergeSort(right)...)
+	return ans
+}
+
+// 无序数组求交集
+func setArr(a, b []int) []int {
+	sort.Slice(a, func(i, j int) bool {
+		return a[i] < a[j]
+	})
+	sort.Slice(b, func(i, j int) bool {
+		return b[i] < b[j]
+	})
+	ans := []int{}
+	i, j := 0, 0
+	for i < len(a) && j < len(b) {
+		if a[i] == b[j] {
+			ans = append(ans, a[i])
+			i++
+			j++
+		} else if a[i] < b[j] {
+			i++
+		} else {
+			j++
+		}
+	}
 	return ans
 }
