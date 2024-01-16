@@ -115,3 +115,47 @@ func generateYHSJ(numRows int) [][]int {
 	}
 	return rows
 }
+
+// 寻找两个有序数组的中位数
+func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
+	if len(nums1) > len(nums2) {
+		nums1, nums2 = nums2, nums1
+	}
+	n := len(nums1) + len(nums2)
+	midIndex := n / 2
+	isZero := n%2 == 0
+	i, j := 0, 0
+	var cur int
+	var pre int
+	for i < len(nums1) && j < len(nums2) {
+		pre = cur
+		if nums1[i] < nums2[j] {
+			cur = nums1[i]
+			i++
+		} else {
+			cur = nums2[j]
+			j++
+		}
+		if midIndex == 0 {
+			if isZero {
+				return (float64(pre + cur)) / 2
+			} else {
+				return float64(cur)
+			}
+		}
+		midIndex--
+	}
+	for k := j; k < len(nums2); k++ {
+		pre = cur
+		cur = nums2[k]
+		if midIndex == 0 {
+			if isZero {
+				return (float64(pre + cur)) / 2
+			} else {
+				return float64(cur)
+			}
+		}
+		midIndex--
+	}
+	return 0
+}
