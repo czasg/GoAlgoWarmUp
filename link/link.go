@@ -107,7 +107,7 @@ func NodeToArray(head *ListNode) (arr []int) {
 	return
 }
 
-// 判断是否存在回环
+// 判断是否存在回环，
 func HasCycle(head *ListNode) bool {
 	if head == nil || head.Next == nil {
 		return false
