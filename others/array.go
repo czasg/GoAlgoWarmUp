@@ -27,3 +27,20 @@ func setArr(a, b []int) []int {
 	}
 	return ans
 }
+
+// 种花问题
+func canPlaceFlowers(flowerbed []int, n int) bool {
+	count := 0
+	i := 0
+	for i < len(flowerbed) {
+		// 当前位置为0，且前一个和后一个位置也为0，表示可以种花
+		if flowerbed[i] == 0 && (i == 0 || flowerbed[i-1] == 0) && (i == len(flowerbed)-1 || flowerbed[i+1] == 0) {
+			flowerbed[i] = 1 // 种花
+			count++
+			i += 2 // 跳到下一个可种植位置的后一个位置
+		} else {
+			i++
+		}
+	}
+	return count >= n
+}
