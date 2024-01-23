@@ -1,6 +1,7 @@
 package others
 
 import (
+	"proj/math"
 	"sort"
 )
 
@@ -56,4 +57,18 @@ func canPlaceFlowers(flowerbed []int, n int) bool {
 		}
 	}
 	return count >= n
+}
+
+// 数组中重复的元素
+func findDuplicates(nums []int) []int {
+	var ans []int
+	for _, num := range nums {
+		index := math.Abs(num) - 1
+		if nums[index] < 0 {
+			ans = append(ans, math.Abs(num))
+		} else {
+			nums[index] = -nums[index]
+		}
+	}
+	return ans
 }
