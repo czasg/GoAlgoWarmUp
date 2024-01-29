@@ -85,13 +85,12 @@ func QuickSort(arr []int) []int {
 
 // 归并排序
 func MergeSort(arr []int) []int {
-
 	if len(arr) <= 1 {
 		return arr
 	}
 	mid := len(arr) / 2
-	left := QuickSort(arr[:mid])
-	right := QuickSort(arr[mid:])
+	left := MergeSort(arr[:mid])
+	right := MergeSort(arr[mid:])
 	return Merge(left, right)
 }
 
