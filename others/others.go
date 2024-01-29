@@ -64,7 +64,7 @@ func carFleet(target int, position []int, speed []int) int {
 	return fleet
 }
 
-// 爬楼梯
+// 爬楼梯-动态规划
 func climbStairs(n int) int {
 	if n <= 1 {
 		return 1
