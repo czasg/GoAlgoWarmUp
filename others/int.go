@@ -10,8 +10,8 @@ func reverseInt(x int) int {
 			return 0
 		}
 		pop := x % 10
-		x /= 10
 		ans = ans*10 + pop
+		x /= 10
 	}
 	return ans
 }
