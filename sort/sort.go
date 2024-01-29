@@ -67,6 +67,28 @@ func QuickSort(arr []int) []int {
 	if len(arr) <= 1 {
 		return arr
 	}
+	base := arr[0]
+	left, right := []int{}, []int{}
+	for i := 1; i < len(arr); i++ {
+		if arr[i] < base {
+			left = append(left, arr[i])
+		} else {
+			right = append(right, arr[i])
+		}
+	}
+	ans := []int{}
+	ans = append(ans, QuickSort(left)...)
+	ans = append(ans, base)
+	ans = append(ans, QuickSort(right)...)
+	return ans
+}
+
+// 归并排序
+func MergeSort(arr []int) []int {
+
+	if len(arr) <= 1 {
+		return arr
+	}
 	mid := len(arr) / 2
 	left := QuickSort(arr[:mid])
 	right := QuickSort(arr[mid:])
@@ -91,25 +113,4 @@ func Merge(a, b []int) []int {
 		arr = append(arr, b[j:]...)
 	}
 	return arr
-}
-
-// 归并排序
-func MergeSort(arr []int) []int {
-	if len(arr) <= 1 {
-		return arr
-	}
-	base := arr[0]
-	left, right := []int{}, []int{}
-	for i := 1; i < len(arr); i++ {
-		if arr[i] < base {
-			left = append(left, arr[i])
-		} else {
-			right = append(right, arr[i])
-		}
-	}
-	ans := []int{}
-	ans = append(ans, MergeSort(left)...)
-	ans = append(ans, base)
-	ans = append(ans, MergeSort(right)...)
-	return ans
 }
