@@ -20,6 +20,15 @@ func (l *ListNode) String() string {
 	return b.String()
 }
 
+func (l *ListNode) List() (arr []int) {
+	var cur = l
+	for cur != nil {
+		arr = append(arr, cur.Val)
+		cur = cur.Next
+	}
+	return
+}
+
 // 移除链表元素
 func Remove(head *ListNode, val int) *ListNode {
 	node := &ListNode{
@@ -86,7 +95,7 @@ func Duplicate(head *ListNode) *ListNode {
 
 // 判断是否属于回文链表
 func IsPalindrome(head *ListNode) bool {
-	arr := NodeToArray(head)
+	arr := head.List()
 	n := len(arr)
 	for i := 0; i < n/2; i++ {
 		if arr[i] != arr[n-i-1] {
@@ -94,17 +103,6 @@ func IsPalindrome(head *ListNode) bool {
 		}
 	}
 	return true
-}
-
-func NodeToArray(head *ListNode) (arr []int) {
-	if head == nil {
-		return
-	}
-	for head != nil {
-		arr = append(arr, head.Val)
-		head = head.Next
-	}
-	return
 }
 
 // 判断是否存在回环，
