@@ -1,6 +1,9 @@
 package others
 
-import "sort"
+import (
+	"math/rand"
+	"sort"
+)
 
 // 回旋镖
 func numberOfBoomerangs(points [][]int) int {
@@ -62,19 +65,6 @@ func carFleet(target int, position []int, speed []int) int {
 		}
 	}
 	return fleet
-}
-
-// 爬楼梯-动态规划
-func climbStairs(n int) int {
-	if n <= 1 {
-		return 1
-	}
-	arr := make([]int, n+1)
-	arr[0], arr[1] = 1, 1
-	for i := 2; i <= n; i++ {
-		arr[i] = arr[i-1] + arr[i-2]
-	}
-	return arr[n]
 }
 
 // 买股票
@@ -158,4 +148,20 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 		midIndex--
 	}
 	return 0
+}
+
+// 用rand7实现rand10
+func rand10() int {
+	for {
+		row := rand7()
+		col := rand7()
+		idx := (row-1)*7 + col
+		if idx <= 40 {
+			return 1 + (idx-1)%10
+		}
+	}
+}
+
+func rand7() int {
+	return rand.Intn(7) + 1
 }
