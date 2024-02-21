@@ -1,21 +1,33 @@
 package others
 
-import "proj/math"
-
 // 最大子数组和 - 动态规划
 func maxSubArray(nums []int) int {
-	if len(nums) == 0 {
+	if len(nums) < 1 {
 		return 0
 	}
 	maxSum := nums[0]
-	currentSum := nums[0]
 	for i := 1; i < len(nums); i++ {
-		// 在当前元素加入之前的子数组和加上当前元素的值进行比较
-		currentSum = int(math.Max(nums[i], currentSum+nums[i]))
-		// 更新全局最大和
-		maxSum = int(math.Max(maxSum, currentSum))
+		curSum := nums[i]
+		if maxSum+curSum > curSum {
+			curSum = maxSum + curSum
+		}
+		if curSum > maxSum {
+			maxSum = curSum
+		}
 	}
 	return maxSum
+	//if len(nums) == 0 {
+	//	return 0
+	//}
+	//maxSum := nums[0]
+	//currentSum := nums[0]
+	//for i := 1; i < len(nums); i++ {
+	//	// 在当前元素加入之前的子数组和加上当前元素的值进行比较
+	//	currentSum = int(math.Max(nums[i], currentSum+nums[i]))
+	//	// 更新全局最大和
+	//	maxSum = int(math.Max(maxSum, currentSum))
+	//}
+	//return maxSum
 }
 
 // 爬楼梯-动态规划
