@@ -1,7 +1,6 @@
 package others
 
 import (
-	"proj/math"
 	"sort"
 )
 
@@ -54,16 +53,39 @@ func canPlaceFlowers(flowerbed []int, n int) bool {
 	return count >= n
 }
 
-// 数组中重复的元素
+// 数组中重复的元素 - 最多只有两个重复元素
 func findDuplicates(nums []int) []int {
-	var ans []int
-	for _, num := range nums {
-		index := math.Abs(num) - 1
-		if nums[index] < 0 {
-			ans = append(ans, math.Abs(num))
-		} else {
-			nums[index] = -nums[index]
+	//var ans []int
+	//for _, num := range nums {
+	//	index := math.Abs(num) - 1
+	//	if nums[index] < 0 {
+	//		ans = append(ans, math.Abs(num))
+	//	} else {
+	//		nums[index] = -nums[index]
+	//	}
+	//}
+	//return ans
+
+	sort.Slice(nums, func(i, j int) bool {
+		return nums[i] < nums[j]
+	})
+	dupl := []int{}
+	for i := 0; i < len(nums)-1; i++ {
+		if nums[i] == nums[i+1] {
+			dupl = append(dupl, nums[i])
 		}
 	}
-	return ans
+	return dupl
+}
+
+// 移除数组中重复的元素
+func removeElement(nums []int, val int) int {
+	index := 0
+	for i := 0; i < len(nums); i++ {
+		if nums[i] != val {
+			nums[index] = nums[i]
+			index++
+		}
+	}
+	return index
 }
