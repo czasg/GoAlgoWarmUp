@@ -87,25 +87,6 @@ func maxProfit(prices []int) int {
 	return profit
 }
 
-// 杨辉三角
-func generateYHSJ(numRows int) [][]int {
-	if numRows < 1 {
-		return [][]int{{1}}
-	}
-	rows := make([][]int, numRows)
-	rows[0] = []int{1}
-	for i := 1; i < numRows; i++ {
-		headRow := rows[i-1]
-		curRow := make([]int, i+1)
-		curRow[0], curRow[i] = 1, 1
-		for j := 1; j < i; j++ {
-			curRow[j] = headRow[j-1] + headRow[j]
-		}
-		rows[i] = curRow
-	}
-	return rows
-}
-
 // 寻找两个有序数组的中位数
 func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 	if len(nums1) > len(nums2) {
