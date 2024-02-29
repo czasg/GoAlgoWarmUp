@@ -15,7 +15,38 @@ func Test_canPlaceFlowers(t *testing.T) {
 		args args
 		want bool
 	}{
-		// TODO: Add test cases.
+		{
+			name: "",
+			args: args{
+				flowerbed: []int{0, 0, 0, 0, 0, 0},
+				n:         3,
+			},
+			want: true,
+		},
+		{
+			name: "",
+			args: args{
+				flowerbed: []int{0, 0, 0, 0, 0, 0},
+				n:         4,
+			},
+			want: false,
+		},
+		{
+			name: "",
+			args: args{
+				flowerbed: []int{0, 1, 0, 0, 0, 0},
+				n:         2,
+			},
+			want: true,
+		},
+		{
+			name: "",
+			args: args{
+				flowerbed: []int{0, 1, 0, 0, 0, 0},
+				n:         3,
+			},
+			want: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -35,7 +66,20 @@ func Test_findDuplicates(t *testing.T) {
 		args args
 		want []int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "",
+			args: args{
+				nums: []int{1, 2, 3, 4, 5, 1, 2, 3, 4, 5},
+			},
+			want: []int{1, 2, 3, 4, 5},
+		},
+		{
+			name: "",
+			args: args{
+				nums: []int{3, 4, 5, 4, 5, 1, 2},
+			},
+			want: []int{4, 5},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -129,6 +173,16 @@ func Test_merge1(t *testing.T) {
 			},
 			want: []int{1, 2, 4, 5, 6, 7},
 		},
+		{
+			name: "",
+			args: args{
+				nums1: []int{1, 2, 3, 4, 0, 0, 0},
+				m:     4,
+				nums2: []int{4, 5, 6},
+				n:     3,
+			},
+			want: []int{1, 2, 3, 4, 4, 5, 6},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -150,7 +204,14 @@ func Test_merge2(t *testing.T) {
 		args args
 		want []int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "",
+			args: args{
+				a: []int{1, 3, 5, 7},
+				b: []int{2, 4, 6},
+			},
+			want: []int{1, 2, 3, 4, 5, 6, 7},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -206,16 +267,34 @@ func Test_removeDuplicates(t *testing.T) {
 		nums []int
 	}
 	tests := []struct {
-		name string
-		args args
-		want int
+		name    string
+		args    args
+		want    int
+		wantNum []int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "",
+			args: args{
+				nums: []int{1, 2, 2, 3, 3, 4, 4, 5},
+			},
+			want:    5,
+			wantNum: []int{1, 2, 3, 4, 5},
+		},
+		{
+			name: "",
+			args: args{
+				nums: []int{1, 2, 2, 2, 3, 3, 4, 4, 4, 5, 6, 6, 6, 6, 7},
+			},
+			want:    7,
+			wantNum: []int{1, 2, 3, 4, 5, 6, 7},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := removeDuplicates(tt.args.nums); got != tt.want {
+			got := removeDuplicates(tt.args.nums)
+			if got != tt.want || !reflect.DeepEqual(tt.args.nums[:got], tt.wantNum) {
 				t.Errorf("removeDuplicates() = %v, want %v", got, tt.want)
+				t.Errorf("removeDuplicates() = %v, want %v", tt.args.nums[:got], tt.wantNum)
 			}
 		})
 	}
@@ -227,16 +306,35 @@ func Test_removeElement(t *testing.T) {
 		val  int
 	}
 	tests := []struct {
-		name string
-		args args
-		want int
+		name    string
+		args    args
+		want    int
+		wantNum []int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "",
+			args: args{
+				nums: []int{1, 2, 2, 3, 3, 4},
+				val:  3,
+			},
+			want:    4,
+			wantNum: []int{1, 2, 2, 4},
+		},
+		{
+			name: "",
+			args: args{
+				nums: []int{1, 2, 3, 4, 5, 3, 5},
+				val:  3,
+			},
+			want:    5,
+			wantNum: []int{1, 2, 4, 5, 5},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := removeElement(tt.args.nums, tt.args.val); got != tt.want {
-				t.Errorf("removeElement() = %v, want %v", got, tt.want)
+			got := removeElement(tt.args.nums, tt.args.val)
+			if got != tt.want || !reflect.DeepEqual(tt.args.nums[:got], tt.wantNum) {
+				t.Errorf("removeDuplicates() = %v, want %v", tt.args.nums[:got], tt.wantNum)
 			}
 		})
 	}
@@ -296,7 +394,14 @@ func Test_setArr(t *testing.T) {
 		args args
 		want []int
 	}{
-		// TODO: Add test cases.
+		{
+			name: "",
+			args: args{
+				a: []int{1, 2, 3, 4, 5},
+				b: []int{4, 5, 6, 7, 8},
+			},
+			want: []int{4, 5},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
