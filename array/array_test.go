@@ -526,3 +526,103 @@ func Test_singleNumber(t *testing.T) {
 		})
 	}
 }
+
+func Test_summaryRanges(t *testing.T) {
+	type args struct {
+		nums []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []string
+	}{
+		{
+			name: "",
+			args: args{
+				nums: []int{0, 1, 2, 4, 5, 7},
+			},
+			want: []string{"0->2", "4->5", "7"},
+		},
+		{
+			name: "",
+			args: args{
+				nums: []int{0, 2, 3, 4, 6, 8, 9},
+			},
+			want: []string{"0", "2->4", "6", "8->9"},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := summaryRanges(tt.args.nums); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("summaryRanges() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_missingNumber(t *testing.T) {
+	type args struct {
+		nums []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "",
+			args: args{
+				nums: []int{3, 0, 1},
+			},
+			want: 2,
+		},
+		{
+			name: "",
+			args: args{
+				nums: []int{9, 6, 4, 2, 3, 5, 7, 0, 1},
+			},
+			want: 8,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := missingNumber(tt.args.nums); got != tt.want {
+				t.Errorf("missingNumber() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_moveZeroes(t *testing.T) {
+	type args struct {
+		nums []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{
+			name: "",
+			args: args{
+				nums: []int{0, 1, 0, 3, 12},
+			},
+			want: []int{1, 3, 12, 0, 0},
+		},
+		{
+			name: "",
+			args: args{
+				nums: []int{0},
+			},
+			want: []int{0},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			moveZeroes(tt.args.nums)
+			if !reflect.DeepEqual(tt.args.nums, tt.want) {
+				t.Errorf("moveZeroes() = %v, want %v", tt.args.nums, tt.want)
+			}
+		})
+	}
+}

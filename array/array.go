@@ -1,6 +1,7 @@
 package array
 
 import (
+	"fmt"
 	"sort"
 )
 
@@ -219,7 +220,7 @@ func canPlaceFlowers(flowerbed []int, n int) bool {
 	return count >= n
 }
 
-// 买卖股票的最佳时机
+// 买卖股票的最佳时机 - 买入卖出，求最大利润
 func maxProfit(prices []int) int {
 	if len(prices) < 1 {
 		return 0
@@ -246,4 +247,71 @@ func singleNumber(nums []int) int {
 		result ^= num
 	}
 	return result
+}
+
+// 多数元素
+func majorityElement(nums []int) int {
+	stat := map[int]int{}
+	for _, num := range nums {
+		stat[num]++
+	}
+	maxK := 0
+	maxV := 0
+	for k, v := range stat {
+		if v > maxV {
+			maxK = k
+			maxV = v
+		}
+	}
+	return maxK
+}
+
+// 有序数组求汇总区间
+func summaryRanges(nums []int) []string {
+	ans := []string{}
+	start, end := nums[0], nums[0]
+	for i := 1; i < len(nums); i++ {
+		if nums[i] == end+1 {
+			end = nums[i]
+			continue
+		}
+		if start == end {
+			ans = append(ans, fmt.Sprintf("%d", start))
+		} else {
+			ans = append(ans, fmt.Sprintf("%d->%d", start, end))
+		}
+		start = nums[i]
+		end = nums[i]
+	}
+	if start == end {
+		ans = append(ans, fmt.Sprintf("%d", start))
+	} else {
+		ans = append(ans, fmt.Sprintf("%d->%d", start, end))
+	}
+	return ans
+}
+
+// 丢失的数字 - 找出这个范围内没有出现在数组中的那个数
+func missingNumber(nums []int) int {
+	n := len(nums)
+	sum := n * (n + 1) / 2
+	for _, num := range nums {
+		sum -= num
+	}
+	return sum
+}
+
+// 移动零 - 将所有 0 移动到数组的末尾
+func moveZeroes(nums []int) {
+	index := 0
+	for i := 0; i < len(nums); i++ {
+		if nums[i] == 0 {
+			continue
+		}
+		nums[index] = nums[i]
+		index++
+	}
+	for i := index; i < len(nums); i++ {
+		nums[i] = 0
+	}
 }
