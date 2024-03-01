@@ -2,6 +2,7 @@ package array
 
 import (
 	"fmt"
+	"math"
 	"sort"
 )
 
@@ -299,4 +300,53 @@ func moveZeroes(nums []int) {
 	for i := index; i < len(nums); i++ {
 		nums[i] = 0
 	}
+}
+
+// 两个数组求交集
+func intersection(nums1 []int, nums2 []int) []int {
+	sort.Slice(nums1, func(i, j int) bool {
+		return nums1[i] < nums1[j]
+	})
+	sort.Slice(nums2, func(i, j int) bool {
+		return nums2[i] < nums2[j]
+	})
+	ans := []int{}
+	i, j := 0, 0
+	preVal := -1
+	for i < len(nums1) && j < len(nums2) {
+		if nums1[i] == nums2[j] {
+			if nums1[i] != preVal {
+				ans = append(ans, nums1[i])
+			}
+			preVal = nums1[i]
+			i++
+			j++
+		} else if nums1[i] < nums2[j] {
+			i++
+		} else {
+			j++
+		}
+	}
+	return ans
+}
+
+// 求第三大的数
+func thirdMax(nums []int) int {
+	firstMax, secondMax, thirdMax := math.MinInt64, math.MinInt64, math.MinInt64
+	for _, num := range nums {
+		if num > firstMax {
+			thirdMax = secondMax
+			secondMax = firstMax
+			firstMax = num
+		} else if num > secondMax && num < firstMax {
+			thirdMax = secondMax
+			secondMax = num
+		} else if num > thirdMax && num < secondMax {
+			thirdMax = num
+		}
+	}
+	if thirdMax != math.MinInt64 {
+		return thirdMax
+	}
+	return firstMax
 }
