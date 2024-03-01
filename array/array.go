@@ -220,19 +220,15 @@ func canPlaceFlowers(flowerbed []int, n int) bool {
 	return count >= n
 }
 
-// 买卖股票的最佳时机 - 买入卖出，求最大利润
+// 买卖股票的最佳时机 - 买入卖出，求最大利润 - 当前价格减去历史最低价格
 func maxProfit(prices []int) int {
-	if len(prices) < 1 {
-		return 0
-	}
 	minPrice := prices[0]
 	profit := 0
 	for i := 0; i < len(prices); i++ {
-		price := prices[i]
-		if price < minPrice {
-			minPrice = price
+		if prices[i] < minPrice {
+			minPrice = prices[i]
 		}
-		curProfit := price - minPrice
+		curProfit := prices[i] - minPrice
 		if curProfit > profit {
 			profit = curProfit
 		}
@@ -249,7 +245,7 @@ func singleNumber(nums []int) int {
 	return result
 }
 
-// 多数元素
+// 找出出现次数最多的元素
 func majorityElement(nums []int) int {
 	stat := map[int]int{}
 	for _, num := range nums {
@@ -294,11 +290,11 @@ func summaryRanges(nums []int) []string {
 // 丢失的数字 - 找出这个范围内没有出现在数组中的那个数
 func missingNumber(nums []int) int {
 	n := len(nums)
-	sum := n * (n + 1) / 2
+	ans := n * (n + 1) / 2
 	for _, num := range nums {
-		sum -= num
+		ans -= num
 	}
-	return sum
+	return ans
 }
 
 // 移动零 - 将所有 0 移动到数组的末尾
