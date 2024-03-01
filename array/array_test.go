@@ -458,6 +458,17 @@ func Test_sortedArrayToBST(t *testing.T) {
 	}
 }
 
+func preorderTraversal(root *TreeNode) []int {
+	if root == nil {
+		return nil
+	}
+	arr := []int{}
+	arr = append(arr, root.Val)
+	arr = append(arr, preorderTraversal(root.Left)...)
+	arr = append(arr, preorderTraversal(root.Right)...)
+	return arr
+}
+
 func Test_twoSum(t *testing.T) {
 	type args struct {
 		nums   []int
