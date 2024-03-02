@@ -706,3 +706,90 @@ func Test_intersection(t *testing.T) {
 		})
 	}
 }
+
+func Test_rotate(t *testing.T) {
+	type args struct {
+		nums []int
+		k    int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{
+			name: "",
+			args: args{
+				nums: []int{1, 2, 3, 4, 5, 6, 7},
+				k:    3,
+			},
+			want: []int{5, 6, 7, 1, 2, 3, 4},
+		},
+		{
+			name: "",
+			args: args{
+				nums: []int{-1, -100, 3, 99},
+				k:    6,
+			},
+			want: []int{3, 99, -1, -100},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			rotate(tt.args.nums, tt.args.k)
+		})
+	}
+}
+
+func Test_isValidSudoku(t *testing.T) {
+	type args struct {
+		board [][]byte
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "",
+			args: args{
+				board: [][]byte{
+					{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+					{'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+					{'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+					{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+					{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+					{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+					{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+					{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+					{'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+				},
+			},
+			want: true,
+		},
+		{
+			name: "",
+			args: args{
+				board: [][]byte{
+					{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+					{'3', '.', '.', '1', '9', '5', '.', '.', '.'},
+					{'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+					{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+					{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+					{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+					{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+					{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+					{'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+				},
+			},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := isValidSudoku(tt.args.board); got != tt.want {
+				t.Errorf("isValidSudoku() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

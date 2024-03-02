@@ -35,20 +35,15 @@ func findDuplicates(nums []int) []int {
 
 // 删除有序数组中的重复项
 func removeDuplicates(nums []int) int {
-	// 使用双指针，一个指向当前位置，一个指向要替换的位置
-	current := 0
-	replace := 1
-	// 遍历数组
-	for replace < len(nums) {
-		// 如果当前元素不等于前一个元素，则将其替换到 replace 位置
-		if nums[replace] != nums[current] {
-			current++
-			nums[current] = nums[replace]
+	index := 0
+	for i := 1; i < len(nums); i++ {
+		if nums[i] == nums[index] {
+			continue
 		}
-		replace++
+		index++
+		nums[index] = nums[i]
 	}
-	// 返回新的数组长度
-	return current + 1
+	return index + 1
 }
 
 // 移除数组中指定的的元素
@@ -349,4 +344,68 @@ func thirdMax(nums []int) int {
 		return thirdMax
 	}
 	return firstMax
+}
+
+// 旋转数组 - 往右移动
+func rotate(nums []int, k int) {
+	n := len(nums)
+	k = k % n
+	tmp := append(nums[n-k:], nums[:n-k]...)
+	for i, num := range tmp {
+		nums[i] = num
+	}
+}
+func intersect(nums1 []int, nums2 []int) []int {
+	sort.Slice(nums1, func(i, j int) bool {
+		return nums1[i] < nums1[j]
+	})
+	sort.Slice(nums2, func(i, j int) bool {
+		return nums2[i] < nums2[j]
+	})
+	i, j := 0, 0
+	ans := []int{}
+	for i < len(nums1) && j < len(nums2) {
+		if nums1[i] == nums2[j] {
+			ans = append(ans, nums1[i])
+			i++
+			j++
+		} else if nums1[i] < nums2[j] {
+			i++
+		} else {
+			j++
+		}
+	}
+	return ans
+}
+
+// 有效的数独 - 判断一个 9 x 9 的数独是否有效
+func isValidSudoku(board [][]byte) bool {
+	// 使用三个数组分别记录每行、每列、每个3x3宫内数字的出现情况
+	row := [9][9]bool{}
+	col := [9][9]bool{}
+	box := [3][3][9]bool{}
+	for i := 0; i < 9; i++ {
+		for j := 0; j < 9; j++ {
+			if board[i][j] == '.' {
+				continue
+			}
+			num := board[i][j] - '1'
+			// 检查行
+			if row[i][num] {
+				return false
+			}
+			row[i][num] = true
+			// 检查列
+			if col[j][num] {
+				return false
+			}
+			col[j][num] = true
+			// 检查3x3宫
+			if box[i/3][j/3][num] {
+				return false
+			}
+			box[i/3][j/3][num] = true
+		}
+	}
+	return true
 }
