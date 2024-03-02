@@ -409,3 +409,29 @@ func isValidSudoku(board [][]byte) bool {
 	}
 	return true
 }
+
+// 验证字符串是否是回文
+func isPalindrome(s string) bool {
+	ss := []byte{}
+	for _, b := range []byte(s) {
+		if b >= 'a' && b <= 'z' {
+			ss = append(ss, b)
+			continue
+		}
+		if b >= 'A' && b <= 'Z' {
+			ss = append(ss, b-'A'+'a')
+			continue
+		}
+		if b >= '0' && b <= '9' {
+			ss = append(ss, b)
+			continue
+		}
+	}
+	n := len(ss)
+	for i := 0; i < n/2; i++ {
+		if ss[i] != ss[n-i-1] {
+			return false
+		}
+	}
+	return true
+}
