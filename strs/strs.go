@@ -69,3 +69,24 @@ func genRandomStr(length int, need_special_char bool) string {
 
 	return string(result)
 }
+
+// 最长公共前缀
+func longestCommonPrefix(strs []string) string {
+	for i := 0; ; i++ {
+		if i > len(strs[0]) {
+			return strs[0]
+		}
+		pub := strs[0][:i]
+		for j := 1; j < len(strs); j++ {
+			if i > len(strs[j]) {
+				return strs[j]
+			}
+			if pub != strs[j][:i] {
+				if i == 0 {
+					return ""
+				}
+				return strs[0][:i-1]
+			}
+		}
+	}
+}
