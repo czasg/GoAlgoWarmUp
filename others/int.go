@@ -50,3 +50,13 @@ func arr2num(arr []int) int {
 	}
 	return ans
 }
+
+// 位1的个数
+func hammingWeight(num uint32) int {
+	ans := 0
+	for num != 0 {
+		ans += int(num & 1)
+		num >>= 1
+	}
+	return ans
+}

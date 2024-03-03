@@ -48,3 +48,29 @@ func Test_removeNthFromEnd(t *testing.T) {
 		})
 	}
 }
+
+func TestIsPalindrome2(t *testing.T) {
+	type args struct {
+		head *ListNode
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "",
+			args: args{
+				head: createLinkedList([]int{1, 2, 3, 2, 1}),
+			},
+			want: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := IsPalindrome2(tt.args.head); got != tt.want {
+				t.Errorf("IsPalindrome2() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

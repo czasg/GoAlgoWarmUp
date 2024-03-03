@@ -1,6 +1,9 @@
 package tree
 
-import "proj/math"
+import (
+	math2 "math"
+	"proj/math"
+)
 
 type TreeNode struct {
 	Val   int
@@ -214,4 +217,75 @@ func SumLeftTree(root *TreeNode) (sum int) {
 	sum += SumLeftTree(root.Left)
 	sum += SumLeftTree(root.Right)
 	return
+}
+
+// 验证二叉搜索树
+func isValidBST(root *TreeNode) bool {
+	return isValidBSTHelper(root, math2.MinInt64, math2.MaxInt64)
+}
+
+func isValidBSTHelper(node *TreeNode, lower, upper int) bool {
+	if node == nil {
+		return true
+	}
+	val := node.Val
+	if val <= lower || val >= upper {
+		return false
+	}
+	return isValidBSTHelper(node.Left, lower, val) && isValidBSTHelper(node.Right, val, upper)
+}
+
+// 层序遍历 - 逐层返回节点
+func levelOrder(root *TreeNode) [][]int {
+	result := [][]int{}
+	if root == nil {
+		return result
+	}
+	queue := []*TreeNode{root}
+	for len(queue) > 0 {
+		levelSize := len(queue)
+		levelValues := make([]int, levelSize)
+		for i := 0; i < levelSize; i++ {
+			node := queue[0]
+			queue = queue[1:]
+			levelValues[i] = node.Val
+
+			if node.Left != nil {
+				queue = append(queue, node.Left)
+			}
+			if node.Right != nil {
+				queue = append(queue, node.Right)
+			}
+		}
+		result = append(result, levelValues)
+	}
+	return result
+}
+
+func isValid(s string) bool {
+	if s == "" {
+		return false
+	}
+	m := map[byte]byte{
+		'(': ')',
+		'[': ']',
+		'{': '}',
+	}
+	_, ok := m[s[0]]
+	if !ok {
+		return false
+	}
+	arr := []byte{}
+	for _, b := range []byte(s) {
+		v, ok := m[b]
+		if ok {
+			arr = append(arr, v)
+			continue
+		}
+		if len(arr) < 1 || arr[len(arr)-1] != b {
+			return false
+		}
+		arr = arr[:len(arr)-1]
+	}
+	return len(arr) == 0
 }
