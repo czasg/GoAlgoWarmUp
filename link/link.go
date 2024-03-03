@@ -29,7 +29,7 @@ func (l *ListNode) List() (arr []int) {
 	return
 }
 
-// 移除链表元素
+// 删除链表指定元素
 func Remove(head *ListNode, val int) *ListNode {
 	node := &ListNode{
 		Val:  0,
@@ -43,6 +43,21 @@ func Remove(head *ListNode, val int) *ListNode {
 		}
 	}
 	return node.Next
+}
+
+// 删除链表的倒数第N个节点 - 双指针
+func removeNthFromEnd(head *ListNode, n int) *ListNode {
+	tmpNode := &ListNode{Next: head}
+	fast, slow := tmpNode, tmpNode
+	for i := 0; i <= n; i++ {
+		fast = fast.Next
+	}
+	for fast != nil {
+		fast = fast.Next
+		slow = slow.Next
+	}
+	slow.Next = slow.Next.Next
+	return tmpNode.Next
 }
 
 // 合并两个有序链表
@@ -101,6 +116,32 @@ func IsPalindrome(head *ListNode) bool {
 		if arr[i] != arr[n-i-1] {
 			return false
 		}
+	}
+	return true
+}
+
+// 判断是否属于回文链表 - 双指针法
+func IsPalindrome2(head *ListNode) bool {
+	slow, fast := head, head
+	for fast != nil && fast.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+	}
+	var prev *ListNode
+	current := slow
+	for current != nil {
+		temp := current.Next
+		current.Next = prev
+		prev = current
+		current = temp
+	}
+	firstHalf, secondHalf := head, prev
+	for secondHalf != nil {
+		if firstHalf.Val != secondHalf.Val {
+			return false
+		}
+		firstHalf = firstHalf.Next
+		secondHalf = secondHalf.Next
 	}
 	return true
 }
