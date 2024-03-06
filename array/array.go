@@ -355,28 +355,6 @@ func rotate(nums []int, k int) {
 		nums[i] = num
 	}
 }
-func intersect(nums1 []int, nums2 []int) []int {
-	sort.Slice(nums1, func(i, j int) bool {
-		return nums1[i] < nums1[j]
-	})
-	sort.Slice(nums2, func(i, j int) bool {
-		return nums2[i] < nums2[j]
-	})
-	i, j := 0, 0
-	ans := []int{}
-	for i < len(nums1) && j < len(nums2) {
-		if nums1[i] == nums2[j] {
-			ans = append(ans, nums1[i])
-			i++
-			j++
-		} else if nums1[i] < nums2[j] {
-			i++
-		} else {
-			j++
-		}
-	}
-	return ans
-}
 
 // 有效的数独 - 判断一个 9 x 9 的数独是否有效
 func isValidSudoku(board [][]byte) bool {
