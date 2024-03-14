@@ -720,10 +720,10 @@ func Test_rotate(t *testing.T) {
 		{
 			name: "",
 			args: args{
-				nums: []int{1, 2, 3, 4, 5, 6, 7},
+				nums: []int{0, 1, 2, 3, 4, 5, 6, 7},
 				k:    3,
 			},
-			want: []int{5, 6, 7, 1, 2, 3, 4},
+			want: []int{5, 6, 7, 0, 1, 2, 3, 4},
 		},
 		{
 			name: "",
@@ -829,6 +829,39 @@ func Test_isPalindrome(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := isPalindrome(tt.args.s); got != tt.want {
 				t.Errorf("isPalindrome() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_thirdMax(t *testing.T) {
+	type args struct {
+		nums []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "",
+			args: args{
+				nums: []int{1, 2, 3, 4, 5, 5, 6, 7, 8},
+			},
+			want: 6,
+		},
+		{
+			name: "",
+			args: args{
+				nums: []int{1, 2, 3, 4, 45, 5, 5, 32, 6, 66, 7, 8},
+			},
+			want: 32,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := thirdMax(tt.args.nums); got != tt.want {
+				t.Errorf("thirdMax() = %v, want %v", got, tt.want)
 			}
 		})
 	}
